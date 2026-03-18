@@ -523,8 +523,14 @@
 
   .signup-form {
     display: flex;
+    flex-direction: column;
     max-width: 420px;
     margin: 0 auto 1rem;
+    gap: 10px;
+  }
+
+  .signup-form .field-row {
+    display: flex;
     border: 1px solid rgba(232,148,58,0.2);
     border-radius: 2px;
     overflow: hidden;
@@ -532,11 +538,12 @@
     transition: border-color 0.25s ease;
   }
 
-  .signup-form:focus-within {
+  .signup-form .field-row:focus-within {
     border-color: rgba(232,148,58,0.5);
     box-shadow: 0 0 20px rgba(232,148,58,0.08);
   }
 
+  .signup-form input[type="text"],
   .signup-form input[type="email"] {
     flex: 1;
     background: transparent;
@@ -550,6 +557,7 @@
     letter-spacing: 0.02em;
   }
 
+  .signup-form input[type="text"]::placeholder,
   .signup-form input[type="email"]::placeholder {
     color: rgba(245,237,216,0.25);
   }
@@ -693,7 +701,7 @@
     </svg>
     <span class="nav-name">Kin Lantern</span>
   </a>
-  <a href="http://eepurl.com/jBYwIw" target="_blank" class="nav-cta">Join waitlist</a>
+  <a href="#signup" class="nav-cta">Join waitlist</a>
 </nav>
 
 <!-- HERO -->
@@ -808,7 +816,7 @@
     animation: fadeUp 0.9s ease 2.05s forwards;
   ">An AI Mandarin tutor for heritage speakers</p>
 
-  <a href="http://eepurl.com/jBYwIw" target="_blank" style="
+  <a href="#signup" style="
     font-family: 'Lato', sans-serif;
     font-size: 0.75rem;
     font-weight: 400;
@@ -853,13 +861,13 @@
 <div class="truth-grid">
   <div class="truth-card">
     <span class="truth-num">One</span>
-    <h3>You hear it. You just can't speak it well yet.</h3>
+    <h3>You hear it. You just can't speak it yet.</h3>
     <p>Your listening and comprehension are real skills. Kin Lantern builds from those — not from stroke order and "nǐ hǎo."</p>
   </div>
   <div class="truth-card">
     <span class="truth-num">Two</span>
     <h3>The shame isn't yours to carry.</h3>
-    <p>Growing up between two languages and two worlds is complicated. Circumstances have changed.</p>
+    <p>Growing up between two languages and two worlds is complicated. Whatever happened to your Mandarin wasn't failure. It was circumstance.</p>
   </div>
   <div class="truth-card">
     <span class="truth-num">Three</span>
@@ -869,8 +877,9 @@
   <div class="truth-card">
     <span class="truth-num">Four</span>
     <h3>Built for the in-between.</h3>
-    <p>A space where you can be a learn at your own pace and get a personalised experience.</p>
+    <p>A space where you can learn at your own pace, personalised to your needs.</p>
   </div>
+
 </div>
 
 <!-- WHAT IT IS -->
@@ -882,7 +891,7 @@
       Kin Lantern is designed for second-generation heritage learners first — not people learning Mandarin as a foreign language, but people <em>returning</em> to a language that was always theirs.
     </p>
     <p>
-      Most language tools start from zero. Kin Lantern starts from your comprehension. We know you already have instincts, an ear, a history with the language — so we build from there toward real conversations with the people who matter most.
+      Most language tools start from zero. Kin Lantern starts where you are. We know you already have instincts, an ear, a history with the language — so we build from there toward real conversations with the people who matter most.
     </p>
     <ul class="feature-list">
       <li>Meets you at your actual level — from overhearing to talking confidently</li>
@@ -904,21 +913,39 @@
       We're building this for a small founding group first.
       Join the waitlist and we'll reach out personally before we launch.
     </p>
-    <a href="http://eepurl.com/jBYwIw" target="_blank" style="
-      display: inline-block;
-      font-family: 'Lato', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--night);
-      background: var(--gold);
-      padding: 1rem 2.4rem;
-      border-radius: 2px;
-      text-decoration: none;
-      transition: background 0.2s ease;
-    ">Join the waitlist →</a>
-    <p class="signup-note">No spam. No selling your details. One email when we're ready.</p>
+    <form class="signup-form" id="signupForm"
+      action="https://kinlantern.us12.list-manage.com/subscribe/post"
+      method="post">
+      <!-- Mailchimp hidden fields — keeps form on-page -->
+      <input type="hidden" name="u" id="mc_u" value="">
+      <input type="hidden" name="id" id="mc_id" value="">
+      <div class="field-row">
+        <input type="text" name="FNAME" id="nameInput" placeholder="Your first name" autocomplete="given-name">
+      </div>
+      <div class="field-row">
+        <input type="email" name="EMAIL" id="emailInput" placeholder="your@email.com" required autocomplete="email">
+      </div>
+      <!-- Anti-bot field — do not remove -->
+      <div style="position:absolute;left:-5000px" aria-hidden="true">
+        <input type="text" name="b_placeholder" tabindex="-1" value="">
+      </div>
+      <button type="submit" style="
+        background: var(--ember);
+        border: none;
+        padding: 1rem 1.5rem;
+        font-family: 'Lato', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 400;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--cream);
+        cursor: pointer;
+        border-radius: 2px;
+        transition: background 0.2s ease;
+        width: 100%;
+      ">Join the waitlist</button>
+    </form>
+    <p class="signup-note">No spam. No selling your details. Get notified when we're ready.</p>
     <div class="success-message" id="successMsg">
       Welcome — we'll be in touch.
       <span class="success-hanzi">欢 迎 回 家</span>
@@ -965,17 +992,45 @@
   }, { threshold: 0.15 });
   document.querySelectorAll('.truth-card').forEach(c => observer.observe(c));
 
-  // Form submission
+  // Mailchimp JSONP submission — stays on page, shows success screen
+  const MC_U  = '97d7f8fff29baaa926a69fb4b';
+  const MC_ID = 'cd14b268ff';
+  document.getElementById('mc_u').value  = MC_U;
+  document.getElementById('mc_id').value = MC_ID;
+
   document.getElementById('signupForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const email = document.getElementById('emailInput').value;
-    if (email) {
-      this.style.display = 'none';
+    const name  = document.getElementById('nameInput').value;
+    if (!email) return;
+
+    const callbackName = 'mcCallback_' + Date.now();
+    const base = 'https://kinlantern.us12.list-manage.com/subscribe/post-json';
+    const params = new URLSearchParams();
+    params.append('u', MC_U);
+    params.append('id', MC_ID);
+    params.append('EMAIL', email);
+    params.append('FNAME', name);
+    params.append('c', callbackName);
+    params.append('b_' + MC_U + '_' + MC_ID, '');
+
+    window[callbackName] = function() {
+      delete window[callbackName];
+      document.getElementById('signupForm').style.display = 'none';
       document.querySelector('.signup-note').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
-      console.log('Waitlist signup:', email);
-      // Replace with your email service (Mailchimp, ConvertKit, etc.)
-    }
+    };
+
+    const script = document.createElement('script');
+    script.src = base + '?' + params.toString();
+    document.body.appendChild(script);
+
+    // Fallback — show success after 3s even if JSONP doesn't fire
+    setTimeout(function() {
+      if (window[callbackName]) {
+        window[callbackName]();
+      }
+    }, 3000);
   });
 
   // Smooth scroll for nav CTA
